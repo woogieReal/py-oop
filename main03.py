@@ -1,3 +1,5 @@
+# When to use class methods and when to use static methods?
+
 # class method, static method
 
 import csv
@@ -51,7 +53,24 @@ class Item:
             return False
     
     def __repr__(self):
-        return f"Item('{self.name}', '{self.price}', {self.quantity})"
+        return f"{self.__class__.__name__}('{self.name}', '{self.price}', {self.quantity})"
+
+class Phone(Item):
+    def __init__(self, name: str, price: float, quantity = 0, broken_phones=0):
+        # Call to super function to have access to all attributes / methods
+        super().__init__(
+            name, price, quantity
+        )
+        
+        # Run validation to the received arguments
+        assert broken_phones >= 0, f"Price {broken_phones} is not greater or equal to zero"
+        
+        # Assign to self object
+        self.broken_phones = broken_phones
         
 
-Item.initiate_from_csv()
+phone1 = Phone("jscPhonev10", 500, 5, 1)
+phone2 = Phone("jscPhonev20", 700, 5, 1)
+
+print(Item.all)
+print(Phone.all)
